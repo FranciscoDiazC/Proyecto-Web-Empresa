@@ -1,1 +1,109 @@
-@import "tailwindcss";
+/* Inyección de las capas internas de Tailwind (IMPORTANTE: mantener el orden) */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* =========================
+    TEMA NORMAL (LIGHT)
+   ========================= */
+@layer base {
+  :root {
+    --background: 241 248 252; /* azul muy claro */
+    --foreground: 30 64 175; /* azul natural */
+
+    --card: 245 248 250; /* blanco suave, más relajante */
+    --card-foreground: 30 64 175; /* azul natural */
+
+    --popover: 245 248 250; /* blanco suave */
+    --popover-foreground: 30 64 175; /* azul natural */
+
+    --primary: 37 99 235; /* azul corporativo */
+    --primary-foreground: 239 246 255; /* azul claro */
+
+    --secondary: 6 182 212; /* cyan */
+    --secondary-foreground: 30 64 175; /* azul natural */
+
+    --accent: 56 189 248; /* azul cielo */
+    --accent-foreground: 30 64 175; /* azul natural */
+
+    --muted: 226 240 248; /* azul grisáceo claro */
+    --muted-foreground: 100 116 139; /* gris azulado */
+
+    --destructive: 220 38 38; /* rojo */
+    --destructive-foreground: 255 255 255; /* blanco */
+
+    --border: 191 219 254; /* azul pálido */
+    --input: 191 219 254; /* azul pálido */
+    --ring: 56 189 248; /* azul cielo */
+  }
+}
+
+/* =========================
+    TEMA DARK
+   ========================= */
+@layer base {
+  .dark {
+    --background: 219 234 254; /* azul muy suave */
+    --foreground: 30 64 175; /* azul natural */
+
+    --card: 210 230 250; /* azul muy suave, más relajante */
+    --card-foreground: 30 64 175; /* azul natural */
+
+    --popover: 210 230 250; /* azul muy suave */
+    --popover-foreground: 30 64 175; /* azul natural */
+
+    --primary: 6 182 212; /* cyan */
+    --primary-foreground: 30 64 175; /* azul natural */
+
+    --secondary: 37 99 235; /* azul corporativo */
+    --secondary-foreground: 239 246 255; /* azul claro */
+
+    --accent: 56 189 248; /* azul cielo */
+    --accent-foreground: 30 64 175; /* azul natural */
+
+    --muted: 186 230 253; /* azul suave */
+    --muted-foreground: 30 64 175; /* azul natural */
+
+    --destructive: 239 68 68; /* rojo */
+    --destructive-foreground: 255 255 255; /* blanco */
+
+    --border: 147 197 253; /* azul claro */
+    --input: 147 197 253; /* azul claro */
+    --ring: 6 182 212; /* cyan */
+  }
+}
+
+/* =========================
+    TEMA CYBERPUNK (SOFT)
+   ========================= */
+@layer base {
+  .cyberpunk {
+    --background: 12 74 110; /* azul profundo */
+    --foreground: 224 242 254; /* azul muy claro */
+
+    --card: 20 90 130; /* azul petróleo más suave */
+    --card-foreground: 224 242 254; /* azul muy claro */
+
+    --popover: 20 90 130; /* azul petróleo más suave */
+    --popover-foreground: 224 242 254; /* azul muy claro */
+
+    --primary: 34 211 238; /* cyan brillante */
+    --primary-foreground: 12 74 110; /* azul profundo */
+
+    --secondary: 56 189 248; /* azul neón suave */
+    --secondary-foreground: 12 74 110; /* azul profundo */
+
+    --accent: 125 211 252; /* azul hielo */
+    --accent-foreground: 12 74 110; /* azul profundo */
+
+    --muted: 56 189 248; /* azul luminoso */
+    --muted-foreground: 12 74 110; /* azul profundo */
+
+    --destructive: 255 77 109; /* rojo rosado */
+    --destructive-foreground: 255 255 255; /* blanco */
+
+    --border: 34 211 238; /* cyan */
+    --input: 56 189 248; /* azul claro */
+    --ring: 125 211 252; /* azul hielo */
+  }
+}

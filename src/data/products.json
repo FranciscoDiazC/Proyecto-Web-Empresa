@@ -1,0 +1,42 @@
+{
+  "pendon": {
+    "titulo": "Pendon",
+    "descripcion": "Descripcion de pendon."
+  },
+  "señaletica": {
+    "titulo": "Señaleticas",
+    "descripcion": "Descripcion de señaletica."
+  },
+  "adhesivo": {
+    "titulo": "Adhesivo",
+    "descripcion": "Descripcion de adhesivos."
+  },
+  "troquelado": {
+    "titulo": "Troquelado",
+    "descripcion": "Descripcion de troquelado."
+  },
+  "pendon_roller": {
+    "titulo": "Pendon Roller",
+    "descripcion": "Descripcion de pendon roller."
+  },
+  "paloma": {
+    "titulo": "Palomas",
+    "descripcion": "Descripcion de paloma."
+  },
+  "acrilico": {
+    "titulo": "Acrilicos",
+    "descripcion": "Descripcion de acrilico."
+  },
+  "tarjeta_presentacion": {
+    "titulo": "Tarjetas de presentacion",
+    "descripcion": "Descripcion de tarjetas de presentacion."
+  },
+  "empavonado": {
+    "titulo": "Empavonados",
+    "descripcion": "Descripcion de tarjetas de presentacion."
+  },
+  "adhesivo_piso": {
+    "titulo": "Adhesivo Piso",
+    "descripcion": "Descripcion de tarjetas de Adhesivo Piso."
+  }
+}
