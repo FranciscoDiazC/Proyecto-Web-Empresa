@@ -1,6 +1,8 @@
+import { Footer } from "./components/Footer"
 import { HeroSection } from "./components/HeroSection"
 import { MainContent } from "./components/MainContent"
 import { NavBar } from "./components/NavBar"
+
 
 export const WebApp = () => {
   return (
@@ -15,6 +17,7 @@ export const WebApp = () => {
       <MainContent></MainContent>
 
       {/* Footer */}
+      <Footer></Footer>
     </>
   )
 }

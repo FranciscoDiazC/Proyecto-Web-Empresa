@@ -1,42 +1,52 @@
 {
   "pendon": {
     "titulo": "Pendon",
-    "descripcion": "Descripcion de pendon."
+    "descripcion": "Descripcion de pendon.",
+    "src": "pendon_roller_gemini.png"
   },
   "señaletica": {
     "titulo": "Señaleticas",
-    "descripcion": "Descripcion de señaletica."
+    "descripcion": "Descripcion de señaletica.",
+    "src": "pendon_roller_gemini.png"
   },
   "adhesivo": {
     "titulo": "Adhesivo",
-    "descripcion": "Descripcion de adhesivos."
+    "descripcion": "Descripcion de adhesivos.",
+    "src": "pendon_roller_gemini.png"
   },
   "troquelado": {
     "titulo": "Troquelado",
-    "descripcion": "Descripcion de troquelado."
+    "descripcion": "Descripcion de troquelado.",
+    "src": "pendon_roller_gemini.png"
   },
   "pendon_roller": {
     "titulo": "Pendon Roller",
-    "descripcion": "Descripcion de pendon roller."
+    "descripcion": "Descripcion de pendon roller.",
+    "src": "pendon_roller_gemini.png"
   },
   "paloma": {
     "titulo": "Palomas",
-    "descripcion": "Descripcion de paloma."
+    "descripcion": "Descripcion de paloma.",
+    "src": "pendon_roller_gemini.png"
   },
   "acrilico": {
     "titulo": "Acrilicos",
-    "descripcion": "Descripcion de acrilico."
+    "descripcion": "Descripcion de acrilico.",
+    "src": "pendon_roller_gemini.png"
   },
   "tarjeta_presentacion": {
     "titulo": "Tarjetas de presentacion",
-    "descripcion": "Descripcion de tarjetas de presentacion."
+    "descripcion": "Descripcion de tarjetas de presentacion.",
+    "src": "pendon_roller_gemini.png"
   },
   "empavonado": {
     "titulo": "Empavonados",
-    "descripcion": "Descripcion de tarjetas de presentacion."
+    "descripcion": "Descripcion de tarjetas de presentacion.",
+    "src": "pendon_roller_gemini.png"
   },
   "adhesivo_piso": {
     "titulo": "Adhesivo Piso",
-    "descripcion": "Descripcion de tarjetas de Adhesivo Piso."
+    "descripcion": "Descripcion de tarjetas de Adhesivo Piso.",
+    "src": "pendon_roller_gemini.png"
   }
 }
