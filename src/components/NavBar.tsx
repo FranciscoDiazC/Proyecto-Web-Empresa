@@ -1,10 +1,11 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 
 export const NavBar = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <nav className="fixed top-0 left-0 w-full bg-background border-b border-border z-50">
+    <nav className="fixed top-[25px] left-0 w-full bg-background border-b border-border z-50">
       <div className="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
         
         {/* Logo */}
@@ -14,16 +15,16 @@ export const NavBar = () => {
         {/* Links desktop (Inicialmente hidden, en "md" -> flex)*/}
         <ul className="hidden md:flex text-sm font-medium text-muted-foreground">
           <li className="hover:text-foreground transition">
-            <a href="#home" className="block px-6 py-5">Inicio</a>
+            <Link to="/" className="block px-6 py-5">Inicio</Link>
           </li>
           <li className="hover:text-foreground transition">
-            <a href="#about" className="block px-6 py-5">Contacto</a>
+            <Link to="/contacto" className="block px-6 py-5">Contacto</Link>
           </li>
           <li className="hover:text-foreground transition">
-            <a href="#projects" className="block px-6 py-5">Mapa</a>
+            <Link to="/mapa" className="block px-6 py-5">Mapa</Link>
           </li>
           <li className="hover:text-foreground transition">
-            <a href="#contact" className="block px-6 py-5">Productos</a>
+            <Link to="/nosotros" className="block px-6 py-5">Nosotros</Link>
           </li>
         </ul>
 
@@ -42,16 +43,16 @@ export const NavBar = () => {
         <div className="md:hidden bg-card border-t border-border">
           <ul className="flex flex-col px-4 text-sm text-card-foreground">
             <li>
-              <a href="#home" className="block py-3">Inicio</a>
+              <Link to="/" className="block py-3">Inicio</Link>
             </li>
             <li>
-              <a href="#about" className="block py-3">Contacto</a>
+              <Link to="/contacto" className="block py-3">Contacto</Link>
             </li>
             <li>
-              <a href="#projects" className="block py-3">Mapa</a>
+              <Link to="/mapa" className="block py-3">Mapa</Link>
             </li>
             <li>
-              <a href="#contact" className="block py-3">Productos</a>
+              <Link to="/nosotros" className="block py-3">Nosotros</Link>
             </li>
           </ul>
         </div>
