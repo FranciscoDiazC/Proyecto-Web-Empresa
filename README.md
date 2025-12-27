@@ -82,6 +82,9 @@
   - Autenticación del administrador.
   - CRUD de ventas (crear, editar, eliminar y listar).
   - Exportación de datos en formato **XML** y **Excel** (XLSX o CSV, esta por evaluarse).
+  - Sistema de gestion de productos visibles en la pagina web
+  - Sistema de gestion de contenido visible en la pagina web
+  - Sistema de gestion de clientes y deudas.
 - **Middleware de seguridad:**
   - Sanitización de inputs.
   - CORS restringido al dominio oficial.

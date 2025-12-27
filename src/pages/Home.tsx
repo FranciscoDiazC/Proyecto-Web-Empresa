@@ -5,18 +5,18 @@ import { Header } from "../components/Header"
 
 export const Home = () => {
   return (
-    <>
-      {/* Header */}
-      <Header></Header>
+    <div className="">
+        {/* Header */}
+        <Header></Header>
 
-      {/* Hero Section (Primera seccion visual fuerte)*/}
-      <HeroSection></HeroSection>
+        {/* Hero Section (Primera seccion visual fuerte)*/}
+        <HeroSection></HeroSection>
 
-      {/* Content (Productos en este caso) */}
-      <MainContent></MainContent>
+        {/* Content (Productos en este caso) */}
+        <MainContent></MainContent>
 
-      {/* Footer */}
-      <Footer></Footer>
-    </>
+        {/* Footer */}
+        <Footer></Footer>
+    </div>
   )
 }

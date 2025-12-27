@@ -7,7 +7,7 @@
   "señaletica": {
     "titulo": "Señaleticas",
     "descripcion": "Descripcion de señaletica.",
-    "src": "pendon_roller_gemini.png"
+    "src": "señaleticas_gemini.png"
   },
   "adhesivo": {
     "titulo": "Adhesivo",
@@ -27,7 +27,7 @@
   "paloma": {
     "titulo": "Palomas",
     "descripcion": "Descripcion de paloma.",
-    "src": "pendon_roller_gemini.png"
+    "src": "paloma_gemini.png"
   },
   "acrilico": {
     "titulo": "Acrilicos",
@@ -37,12 +37,12 @@
   "tarjeta_presentacion": {
     "titulo": "Tarjetas de presentacion",
     "descripcion": "Descripcion de tarjetas de presentacion.",
-    "src": "pendon_roller_gemini.png"
+    "src": "tarjetas_presentacion_gemini.png"
   },
   "empavonado": {
     "titulo": "Empavonados",
     "descripcion": "Descripcion de tarjetas de presentacion.",
-    "src": "pendon_roller_gemini.png"
+    "src": "empavonados_gemini.png"
   },
   "adhesivo_piso": {
     "titulo": "Adhesivo Piso",
