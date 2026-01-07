@@ -1,3 +1,7 @@
+import { FaAt, FaPhoneVolume, FaSun } from "react-icons/fa"
+import { FaLocationDot, FaSquareXTwitter } from "react-icons/fa6"
+import { RiFacebookCircleFill, RiInstagramFill } from "react-icons/ri"
+
 export const Footer = () => {
   return (
     <footer className="bg-background border-t border-border">
@@ -11,7 +15,15 @@ export const Footer = () => {
               Síguenos
             </h3>
             <div className="text-sm text-muted-foreground flex flex-row items-center">
-              <img src="/Instagram_icon.svg" className="w-[clamp(5px,6vw,25px)]" />
+              <RiInstagramFill className="w-[clamp(5px,6vw,20px)] h-[clamp(5px,6vw,20px)] text-black"></RiInstagramFill>
+              <div className="pl-1">DevGrafica</div>
+            </div>
+            <div className="text-sm text-muted-foreground flex flex-row items-center">
+              <RiFacebookCircleFill className="w-[clamp(5px,6vw,20px)] h-[clamp(5px,6vw,20px)] text-black"></RiFacebookCircleFill>
+              <div className="pl-1">DevGrafica</div>
+            </div>
+            <div className="text-sm text-muted-foreground flex flex-row items-center">
+              <FaSquareXTwitter className="w-[clamp(5px,6vw,20px)] h-[clamp(5px,6vw,20px)] text-black"></FaSquareXTwitter>
               <div className="pl-1">DevGrafica</div>
             </div>
           </div>
@@ -22,15 +34,15 @@ export const Footer = () => {
               Contactos
             </h3>
             <div className="text-sm text-muted-foreground flex flex-row items-center">
-              <img src="/location-dot-solid-full.svg" className="w-[clamp(5px,6vw,25px)]" />
+              <FaLocationDot className="w-[clamp(5px,6vw,20px)] h-[clamp(5px,6vw,20px)] text-black" ></FaLocationDot>
               <div className="pl-1">Avenida Los Canelos, 334. Concepción, Chile.</div>
             </div>
             <div className="text-sm text-muted-foreground flex flex-row items-center">
-              <img src="/at-solid-full.svg" className="w-[clamp(5px,6vw,25px)]" />
+              <FaAt className="w-[clamp(5px,6vw,20px)] h-[clamp(5px,6vw,20px)] text-black"></FaAt>
               <div className="pl-1">contacto@gmail.com</div>
             </div>
             <div className="text-sm text-muted-foreground flex flex-row items-center">
-              <img src="/at-solid-full.svg" className="w-[clamp(5px,6vw,25px)]" />
+              <FaPhoneVolume className="w-[clamp(5px,6vw,20px)] h-[clamp(5px,6vw,20px)] text-black"></FaPhoneVolume>
               <div className="pl-1">+56 9 2333 5434 (Llamadas y WhatsApp)</div>
             </div>
           </div>

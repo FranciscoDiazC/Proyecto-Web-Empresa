@@ -20,9 +20,12 @@
 
 ### Panel de Administración (CMS)
 - Autenticación de usuario administrador (login).
-- Registro de ventas: crear, editar, eliminar y listar ventas (con sus estados pagados en totalidad o parcialmente).
+- Seccion Registro de ventas: crear, editar, eliminar y listar ventas (con sus estados pagados en totalidad o parcialmente).
 - Exportar ventas en formato **.xml** o **Excel**.
 - Solo un rol de usuario: **Administrador**.
+- Seccion de gestion de servicios visibles en la pagina web
+- Seccion de gestion de contenido visible en la pagina web (Principal y rutas)
+- Seccion de gestion de clientes y deudas.
 
 ---
 
@@ -78,11 +81,12 @@
 ### Back-end
 - **Entorno:** Node.js con ExpressJS.
 - **Estilo de API:** REST, consumida por el front-end.
+- **ORM:** Prisma
 - **Operaciones principales:**
   - Autenticación del administrador.
   - CRUD de ventas (crear, editar, eliminar y listar).
   - Exportación de datos en formato **XML** y **Excel** (XLSX o CSV, esta por evaluarse).
-  - Sistema de gestion de productos visibles en la pagina web
+  - Sistema de gestion de servicios visibles en la pagina web
   - Sistema de gestion de contenido visible en la pagina web
   - Sistema de gestion de clientes y deudas.
 - **Middleware de seguridad:**
@@ -92,7 +96,6 @@
 - **Autenticación:**
   - **JWT** para manejo de sesiones desde el front.
   - **Cookies + sesiones** para la sección administrativa.
-- **No habrá carga de archivos** en el sistema.
 
 ---
 

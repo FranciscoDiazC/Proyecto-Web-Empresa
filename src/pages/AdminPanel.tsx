@@ -1,15 +1,16 @@
-import { LuChartArea, LuFileText, LuLayoutDashboard, LuPackage, LuSettings, LuShoppingCart, LuUser } from "react-icons/lu";
+import { LuFileText, LuLayoutDashboard, LuShoppingCart, LuCreditCard, LuWrench, LuFile, LuUser } from "react-icons/lu";
 import { AdminNavbar } from "../components/AdminPanel/AdminNavBar"
 import { SidebarDesktop } from "../components/AdminPanel/SidebarDesktop";
 import { useState } from "react";
 import type { IconType } from "react-icons";
 import { SidebarMobile } from "../components/AdminPanel/SidebarMobile";
-import { AdminDashboardContent } from "../components/AdminPanel/AdminContent/AdminDashboardContent";
-import { AdminVentasContent } from "../components/AdminPanel/AdminContent/AdminVentasContent";
-import { AdminProductosWebContent } from "../components/AdminPanel/AdminContent/AdminProductosWebContent";
-import { AdminAnaliticasContent } from "../components/AdminPanel/AdminContent/AdminAnaliticasContent";
-import { AdminAuditoriaContent } from "../components/AdminPanel/AdminContent/AdminAuditoriaContent";
-import { AdminConfigContent } from "../components/AdminPanel/AdminContent/AdminConfigContent";
+import { AdminDashboardContent } from "../components/AdminPanel/AdminContent/Dashboard/AdminDashboardContent";
+import { AdminVentasContent } from "../components/AdminPanel/AdminContent/Ventas/AdminVentasContent";
+import { AdminAuditoriaContent } from "../components/AdminPanel/AdminContent/Auditoria/AdminAuditoriaContent";
+import { AdminDeudasContent } from "../components/AdminPanel/AdminContent/Deudas/AdminDeudasContent";
+import { AdminServiciosContent } from "../components/AdminPanel/AdminContent/Servicios/AdminServiciosContent";
+import { AdminContenidoContent } from "../components/AdminPanel/AdminContent/Contenido/AdminContenidoContent";
+import { AdminClientesContent } from "../components/AdminPanel/AdminContent/Clientes/AdminClientesContent";
 
 interface MenuItem {
   name: string;
@@ -19,11 +20,11 @@ interface MenuItem {
 const MENU_ITEMS: MenuItem[] = [
   { name: 'Dashboard', icon: LuLayoutDashboard },
   { name: 'Ventas', icon: LuShoppingCart },
+  { name: 'Deudas', icon: LuCreditCard },
   { name: 'Clientes', icon: LuUser },
-  { name: 'Productos Web', icon: LuPackage },
-  { name: 'Analíticas', icon: LuChartArea },
+  { name: 'Servicios', icon: LuWrench },
+  { name: 'Contenido', icon: LuFile },
   { name: 'Auditoría', icon: LuFileText },
-  { name: 'Configuración', icon: LuSettings },
 ];
 
 export const AdminPanel = () => {
@@ -57,6 +58,27 @@ export const AdminPanel = () => {
   const handleLogout = (): void => {
     console.log('Cerrando sesión...');
     // Aquí iría la lógica de logout
+  };
+
+  const renderContent = () => {
+    switch (activeRoute) {
+      case 'Dashboard':
+        return <AdminDashboardContent />;
+      case 'Ventas':
+        return <AdminVentasContent />;
+      case 'Deudas':
+        return <AdminDeudasContent />;
+      case 'Clientes':
+        return <AdminClientesContent/>;
+      case 'Servicios':
+        return <AdminServiciosContent />;
+      case 'Contenido':
+        return <AdminContenidoContent />;
+      case 'Auditoría':
+        return <AdminAuditoriaContent />;
+      default:
+        return <AdminDashboardContent />;
+    }
   };
 
   return (
@@ -95,12 +117,7 @@ export const AdminPanel = () => {
             ${mobileMenuOpen ? 'pl-64 lg:pl-0' : 'pl-0'} 
             ${sidebarOpen ? 'lg:pl-64' : 'lg:pl-0'}`}
         >
-          <AdminDashboardContent></AdminDashboardContent>
-          <AdminVentasContent></AdminVentasContent>
-          <AdminProductosWebContent></AdminProductosWebContent>
-          <AdminAnaliticasContent></AdminAnaliticasContent>
-          <AdminAuditoriaContent></AdminAuditoriaContent>
-          <AdminConfigContent></AdminConfigContent>
+          {renderContent()}
         </main>
       </div>
     </div>
