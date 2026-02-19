@@ -1,0 +1,202 @@
+business_rules_model:
+  scope: transversal
+  description: "Modelo de reglas de negocio, explica en que consiste cada regla de negocio del sistema."
+
+  guards:
+    - id: "RN-GV-G01"
+      title: "No operar sobre venta anulada"
+      description: "No se permite ejecutar ninguna operación sobre una venta en estado 'Anulada', excepto su visualización."
+
+    - id: "RN-GV-G02"
+      title: "Venta no anulable por pagos registrados"
+      description: "Una venta no puede ser anulada si presenta pagos registrados."
+
+    - id: "RN-GV-G03"
+      title: "Validación monto nota de crédito"
+      description: "El monto de una nota de crédito debe ser mayor a cero y menor o igual al saldo pendiente de la deuda asociada."
+
+    - id: "RN-GV-G04"
+      title: "Validación datos crear venta"
+      description: "No se pueden crear ventas si se suministran datos inválidos o incompletos."
+
+    - id: "RN-GV-G05"
+      title: "Cliente debe existir para asociar venta"
+      description: "No se pueden asociar ventas a clientes no existentes."
+
+    - id: "RN-GV-G06"
+      title: "Rol SALES_OPERATOR requerido (Ventas)"
+      description: "El usuario debe poseer el rol SALES_OPERATOR para visualizar o realizar cualquier acción disponible sobre el módulo de Ventas."
+
+    - id: "RN-GP-G01"
+      title: "No operar sobre pago anulado"
+      description: "No se permite ejecutar operaciones sobre un pago en estado 'Anulado', excepto su visualización."
+
+    - id: "RN-GP-G02"
+      title: "Validación monto de pago"
+      description: "El monto de un pago debe ser mayor a cero y menor o igual al saldo pendiente de la deuda asociada."
+
+    - id: "RN-GP-G03"
+      title: "Registrar pagos solo en deudas con saldo"
+      description: "Solo se pueden registrar pagos sobre deudas con saldo pendiente mayor a cero."
+
+    - id: "RN-GP-G04"
+      title: "Validación datos registrar pago"
+      description: "No se pueden registrar pagos si la solicitud posee datos inválidos o campos incompletos."
+
+    - id: "RN-GP-G05"
+      title: "Rol PAYMENT_OPERATOR requerido (Pagos)"
+      description: "El usuario debe poseer el rol PAYMENT_OPERATOR para realizar cualquier acción disponible sobre el módulo de Pagos."
+
+    - id: "RN-GC-G01"
+      title: "Cliente con deudas pendientes no anulable"
+      description: "Un cliente con deudas pendientes no puede ser anulado."
+
+    - id: "RN-GC-G02"
+      title: "Editar solo clientes Habilitados"
+      description: "Solo se pueden editar clientes que se encuentren en estado 'Habilitado'."
+
+    - id: "RN-GC-G03"
+      title: "No anular clientes ya anulados"
+      description: "No se pueden anular clientes que ya se encuentren en estado 'Anulado'."
+
+    - id: "RN-GC-G04"
+      title: "Habilitar solo clientes anulados"
+      description: "Solo se pueden habilitar clientes que se encuentren en estado 'Anulado'."
+
+    - id: "RN-GC-G05"
+      title: "Validación crear cliente"
+      description: "No se pueden crear clientes suministrando información inválida o incompleta."
+
+    - id: "RN-GC-G06"
+      title: "Validación editar cliente"
+      description: "No se pueden editar clientes suministrando información inválida o incompleta."
+
+    - id: "RN-GC-G07"
+      title: "Acciones restringidas sobre cliente anulado"
+      description: "No se puede realizar ninguna acción, excepto habilitar y leer, sobre un cliente en estado 'Anulado'."
+
+    - id: "RN-GC-G08"
+      title: "Rol CLIENTS_ADMIN requerido (Clientes)"
+      description: "El usuario debe poseer el rol CLIENTS_ADMIN para visualizar o realizar cualquier acción disponible sobre el módulo de Clientes."
+
+    - id: "RN-GE-G01"
+      title: "Editar solo empresas habilitadas"
+      description: "Solo se pueden editar empresas que se encuentren en estado 'Habilitado'."
+
+    - id: "RN-GE-G02"
+      title: "No anular empresas ya anuladas"
+      description: "No se pueden anular empresas que se encuentren en estado 'Anulado'."
+
+    - id: "RN-GE-G03"
+      title: "Habilitar solo empresas anuladas"
+      description: "Solo se pueden habilitar empresas que se encuentren en estado 'Anulado'."
+
+    - id: "RN-GE-G04"
+      title: "No anular empresas con clientes asociados"
+      description: "No se pueden anular empresas que posean clientes asociados a ellas."
+
+    - id: "RN-GE-G05"
+      title: "Validación crear/editar empresa"
+      description: "Solo se pueden crear y editar empresas con información completa y válida."
+
+    - id: "RN-GE-G06"
+      title: "Rol COMPANIES_ADMIN requerido (Empresas)"
+      description: "El usuario debe poseer el rol COMPANIES_ADMIN para visualizar o realizar cualquier acción disponible sobre el módulo de Empresas."
+
+    - id: "RN-GS-G01"
+      title: "Editar/Eliminar solo servicios existentes"
+      description: "Solo se pueden editar y eliminar servicios existentes."
+
+    - id: "RN-GS-G02"
+      title: "Validación crear/editar servicio"
+      description: "Solo se pueden crear o editar servicios con información completa y válida."
+
+    - id: "RN-GS-G03"
+      title: "Rol CONTENT_ADMIN requerido (Servicios)"
+      description: "El usuario debe poseer el rol CONTENT_ADMIN para visualizar o realizar cualquier acción disponible sobre el módulo de Servicios."
+
+    - id: "RN-GCN-G01"
+      title: "Editar/Eliminar solo contenidos existentes"
+      description: "Solo se pueden editar o eliminar contenidos existentes."
+
+    - id: "RN-GCN-G02"
+      title: "Validación crear/editar contenido"
+      description: "Solo se pueden crear o editar contenidos suministrando información completa y válida."
+
+    - id: "RN-GCN-G03"
+      title: "Rol CONTENT_ADMIN requerido (Contenidos)"
+      description: "El usuario debe poseer el rol CONTENT_ADMIN para visualizar o realizar cualquier acción disponible sobre el módulo de Contenidos."
+
+  invariants:
+    - id: "RN-IS-I01"
+      title: "Auditar intentos de autenticación"
+      description: "Todo intento de autenticación será registrado en la auditoría."
+
+    - id: "RN-CS-I01"
+      title: "Auditar cierres de sesión"
+      description: "Todo cierre de sesión será registrado en la auditoría."
+
+    - id: "RN-GV-I01"
+      title: "Auditar operaciones no-lectura en ventas"
+      description: "Toda operación sobre ventas, excepto las de lectura, debe quedar registrada en la auditoría."
+
+    - id: "RN-GV-I02"
+      title: "Venta anulada es estado terminal"
+      description: "Una venta en estado 'Anulada' se considera un estado terminal y no puede transitar a otro estado posterior."
+
+    - id: "RN-GP-I01"
+      title: "Auditar operaciones no-lectura en pagos"
+      description: "Toda operación sobre pagos, excepto de lectura, debe quedar registrada en la auditoría."
+
+    - id: "RN-GP-I02"
+      title: "Pago anulado es estado terminal"
+      description: "Un pago en estado 'Anulado' se considera un estado terminal y no puede ser modificado posteriormente."
+
+    - id: "RN-GC-I01"
+      title: "Auditar operaciones no-lectura en clientes"
+      description: "Toda operación sobre clientes, excepto de lectura, debe quedar registrada en la auditoría."
+
+    - id: "RN-GE-I01"
+      title: "Auditar operaciones no-lectura en empresas"
+      description: "Toda operación sobre empresas, excepto de lectura, debe quedar registrada en la auditoría."
+
+    - id: "RN-GCN-I01"
+      title: "Auditar operaciones no-lectura en contenidos"
+      description: "Toda operación sobre contenidos, excepto de lectura, debe quedar registrada en la auditoría."
+
+    - id: "RN-GS-I01"
+      title: "Auditar operaciones no-lectura en servicios"
+      description: "Toda operación sobre servicios, excepto de lectura, debe quedar registrada en la auditoría."
+
+  effects:
+    - id: "RN-GV-E01"
+      title: "Crear deuda al crear venta"
+      description: "La creación de una venta genera automáticamente una deuda por el monto total de la venta."
+
+    - id: "RN-GV-E02"
+      title: "Anular deuda al anular venta"
+      description: "La anulación de una venta también anula la deuda asociada."
+
+    - id: "RN-GP-E01"
+      title: "Disminuir saldo al registrar pago"
+      description: "El registro de un pago disminuye el saldo pendiente de la deuda asociada y puede marcarla como pagada."
+
+    - id: "RN-GP-E02"
+      title: "Restaurar saldo al anular pago"
+      description: "La anulación de un pago restaura el saldo pendiente de la deuda asociada en el monto del pago anulado."
+
+    - id: "RN-GC-E01"
+      title: "Cliente disponible para ventas"
+      description: "La creación de un cliente lo deja disponible para ser asociado a ventas futuras."
+
+    - id: "RN-GC-E02"
+      title: "Efecto de anulación de cliente"
+      description: "La anulación de un cliente impide su asociación a nuevas ventas, sin afectar ventas históricas ya registradas."
+
+    - id: "RN-GE-E01"
+      title: "Empresa disponible para asociación"
+      description: "La creación de una empresa la deja disponible para ser asociada a clientes y ventas futuras."
+
+    - id: "RN-GE-E02"
+      title: "Efecto de anulación de empresa"
+      description: "La anulación de una empresa impide su asociación a nuevos procesos, sin afectar asociaciones históricas ya registradas."

@@ -89,6 +89,7 @@
   - Sistema de gestion de servicios visibles en la pagina web
   - Sistema de gestion de contenido visible en la pagina web
   - Sistema de gestion de clientes y deudas.
+  - Sistema de Auditorias
 - **Middleware de seguridad:**
   - Sanitización de inputs.
   - CORS restringido al dominio oficial.

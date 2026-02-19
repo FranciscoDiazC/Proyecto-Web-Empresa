@@ -1,0 +1,128 @@
+exceptions_model:
+  scope: transversal
+  description: "Modelo de excepciones, explica los tipos de excepciones que puede tener el sistema, y que reglas de negocio afecta."
+
+  exceptions:
+    - id: "EXC-AUTH-VAL-01"
+      description: "Credenciales inválidas"
+      business_rules_origins: ["RN-GV-I01"]
+
+    - id: "EXC-STATE-CONFLICT-01"
+      description: "Usuario bloqueado"
+      business_rules_origins: ["RN-GV-I01"]
+
+    - id: "EXC-STATE-CONFLICT-02"
+      description: "Operación no permitida sobre venta anulada"
+      business_rules_origins: ["RN-GV-G01"]
+
+    - id: "EXC-PERM-CONFLICT-01"
+      description: "Error: acceso no autorizado al módulo de Ventas"
+      business_rules_origins: ["RN-GV-G06"]
+
+    - id: "EXC-DATA-VAL-01"
+      description: "Error de validación de datos al crear venta"
+      business_rules_origins: ["RN-GV-G04"]
+
+    - id: "EXC-RULE-CONFLICT-01"
+      description: "Venta no anulable por pagos registrados"
+      business_rules_origins: ["RN-GV-G02"]
+
+    - id: "EXC-ID-MISS-01"
+      description: "Cliente no existente al corregir cliente de venta"
+      business_rules_origins: ["RN-GV-G05"]
+
+    - id: "EXC-RULE-VAL-01"
+      description: "Monto de nota de crédito inválido"
+      business_rules_origins: ["RN-GV-G03"]
+
+    - id: "EXC-STATE-CONFLICT-03"
+      description: "Operación no permitida sobre pago anulado"
+      business_rules_origins: ["RN-GP-G01"]
+
+    - id: "EXC-PERM-CONFLICT-02"
+      description: "Acceso no autorizado al módulo de Pagos"
+      business_rules_origins: ["RN-GP-G05"]
+
+    - id: "EXC-DATA-VAL-02"
+      description: "Error de validación de datos al registrar pago"
+      business_rules_origins: ["RN-GP-G04"]
+
+    - id: "EXC-RULE-VAL-02"
+      description: "Monto de pago inválido"
+      business_rules_origins: ["RN-GP-G02"]
+
+    - id: "EXC-RULE-CONFLICT-02"
+      description: "Pago no anulable"
+      business_rules_origins: ["RN-GP-G01"]
+
+    - id: "EXC-STATE-CONFLICT-04"
+      description: "Operación no permitida sobre cliente anulado"
+      business_rules_origins: ["RN-GC-G07"]
+
+    - id: "EXC-PERM-CONFLICT-03"
+      description: "Acceso no autorizado al módulo de Clientes"
+      business_rules_origins: ["RN-GC-G08"]
+
+    - id: "EXC-DATA-VAL-03"
+      description: "Error de validación de datos al crear cliente"
+      business_rules_origins: ["RN-GC-G05"]
+
+    - id: "EXC-DATA-VAL-04"
+      description: "Error de validación de datos al editar cliente"
+      business_rules_origins: ["RN-GC-G06"]
+
+    - id: "EXC-RULE-CONFLICT-03"
+      description: "Cliente no anulable"
+      business_rules_origins: ["RN-GC-G01", "RN-GC-G03"]
+
+    - id: "EXC-STATE-CONFLICT-05"
+      description: "Operación no permitida sobre empresa anulada"
+      business_rules_origins: ["RN-GE-G01", "RN-GE-G02", "RN-GE-G03"]
+
+    - id: "EXC-PERM-CONFLICT-04"
+      description: "Acceso no autorizado al módulo de Empresas"
+      business_rules_origins: ["RN-GE-G06"]
+
+    - id: "EXC-DATA-VAL-05"
+      description: "Error de validación de datos al crear empresa"
+      business_rules_origins: ["RN-GE-G05"]
+
+    - id: "EXC-DATA-VAL-06"
+      description: "Error de validación de datos al editar empresa"
+      business_rules_origins: ["RN-GE-G05"]
+
+    - id: "EXC-RULE-CONFLICT-04"
+      description: "Empresa no anulable"
+      business_rules_origins: ["RN-GE-G02", "RN-GE-G04"]
+
+    - id: "EXC-ID-MISS-02"
+      description: "Servicio inexistente"
+      business_rules_origins: ["RN-GS-G01"]
+
+    - id: "EXC-PERM-CONFLICT-05"
+      description: "Acceso no autorizado al módulo de Servicios"
+      business_rules_origins: ["RN-GS-G03"]
+
+    - id: "EXC-DATA-VAL-07"
+      description: "Error de validación de datos al crear servicio"
+      business_rules_origins: ["RN-GS-G02"]
+
+    - id: "EXC-DATA-VAL-08"
+      description: "Error de validación de datos al editar servicio"
+      business_rules_origins: ["RN-GS-G02"]
+
+    - id: "EXC-ID-MISS-03"
+      description: "Contenido inexistente"
+      business_rules_origins: ["RN-GCN-G01"]
+
+    - id: "EXC-PERM-CONFLICT-06"
+      description: "Acceso no autorizado al módulo de Contenidos"
+      business_rules_origins: ["RN-GCN-G03"]
+
+    - id: "EXC-DATA-VAL-09"
+      description: "Error de validación de datos al crear contenido"
+      business_rules_origins: ["RN-GCN-G02"]
+
+    - id: "EXC-DATA-VAL-10"
+      description: "Error de validación de datos al editar contenido"
+      business_rules_origins: ["RN-GCN-G02"]

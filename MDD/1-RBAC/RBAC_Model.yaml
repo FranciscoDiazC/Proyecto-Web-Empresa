@@ -1,0 +1,61 @@
+rbac:
+  roles:
+
+    USER:
+      description: "Acceso básico al sistema"
+      permissions:
+        - auth.login
+        - auth.logout
+
+    AUDITOR:
+      description: "Acceso de solo lectura a auditorías"
+      permissions:
+        - audit.read
+
+    SALES_OPERATOR:
+      description: "Gestión operativa de ventas"
+      permissions:
+        - sales.read_sale
+        - sales.create_sale
+        - sales.cancel_sale
+        - sales.update_sale_description
+        - sales.update_sale_client
+        - sales.create_credit_note
+
+    PAYMENT_OPERATOR:
+      description: "Gestión de pagos y deudas"
+      permissions:
+        - payments.read_payment
+        - payments.read_debt
+        - payments.create_payment
+        - payments.cancel_payment
+
+    CLIENTS_ADMIN:
+      description: "Gestión de clientes"
+      permissions:
+        - clients.read_client
+        - clients.create_client
+        - clients.update_client
+        - clients.disable_client
+        - clients.enable_client
+
+    COMPANIES_ADMIN:
+      description: "Gestión de empresas"
+      permissions:
+        - companies.read_company
+        - companies.create_company
+        - companies.update_company
+        - companies.disable_company
+        - companies.enable_company
+
+    CONTENT_ADMIN:
+      description: "Gestión de servicios y contenidos"
+      permissions:
+        - services.read_service
+        - services.create_service
+        - services.update_service
+        - services.delete_service
+        - content.read_content
+        - content.create_content
+        - content.update_content
+        - content.delete_content

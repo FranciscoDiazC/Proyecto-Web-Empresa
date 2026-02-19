@@ -1,4 +1,4 @@
-import { FaAt, FaPhoneVolume, FaSun } from "react-icons/fa"
+import { FaAt, FaPhoneVolume } from "react-icons/fa"
 import { FaLocationDot, FaSquareXTwitter } from "react-icons/fa6"
 import { RiFacebookCircleFill, RiInstagramFill } from "react-icons/ri"
 

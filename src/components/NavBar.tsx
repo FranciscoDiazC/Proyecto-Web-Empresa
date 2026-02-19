@@ -10,7 +10,7 @@ export const NavBar = () => {
         
         {/* Logo */}
         <div className="text-xl font-semibold text-foreground">
-          DevGrafica
+          <Link to="/admin" className="block py-3">DevGrafica</Link>
         </div>
         {/* Links desktop (Inicialmente hidden, en "md" -> flex)*/}
         <ul className="hidden md:flex text-sm font-medium text-muted-foreground">

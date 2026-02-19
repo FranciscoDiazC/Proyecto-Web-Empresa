@@ -1,0 +1,262 @@
+Database_Schema:
+  name: "Database_Schema"
+
+  tables:
+
+    Usuario:
+      columns:
+        id_usuario:
+          type: int
+          pk: true
+        hashed_pass:
+          type: string
+        correo:
+          type: string
+        fecha_creacion:
+          type: datetime
+
+    Rol:
+      columns:
+        id_rol:
+          type: int
+          pk: true
+        nombre_rol:
+          type: string
+        descripcion:
+          type: string
+
+    Permiso:
+      columns:
+        id_permiso:
+          type: int
+          pk: true
+        codigo:
+          type: string
+        descripcion:
+          type: string
+
+    Usuario_Rol:
+      columns:
+        id_usuario:
+          type: int
+          pk: true
+          fk:
+            references: Usuario.id_usuario
+            nullable: false
+        id_rol:
+          type: int
+          pk: true
+          fk:
+            references: Rol.id_rol
+            nullable: false
+
+    Rol_Permiso:
+      columns:
+        id_rol:
+          type: int
+          pk: true
+          fk:
+            references: Rol.id_rol
+            nullable: false
+        id_permiso:
+          type: int
+          pk: true
+          fk:
+            references: Permiso.id_permiso
+            nullable: false
+
+    Auditoria:
+      columns:
+        id_auditoria:
+          type: int
+          pk: true
+        accion:
+          type: string
+        fecha:
+          type: datetime
+        entidad_afectada:
+          type: string
+        id_registro:
+          type: int
+        estado_nuevo:
+          type: string
+        estado_anterior:
+          type: string
+        id_usuario:
+          type: int
+          fk:
+            references: Usuario.id_usuario
+            nullable: false
+
+    Sesion:
+      columns:
+        id_sesion:
+          type: int
+          pk: true
+        estado:
+          type: string
+        fecha_inicio:
+          type: datetime
+        fecha_expiracion:
+          type: datetime
+        fecha_cierre:
+          type: datetime
+        ip_origen:
+          type: string
+        user_agent:
+          type: string
+        id_usuario:
+          type: int
+          fk:
+            references: Usuario.id_usuario
+            nullable: false
+
+    Servicio:
+      columns:
+        id_servicio:
+          type: int
+          pk: true
+        nombre_servicio:
+          type: string
+        descripcion:
+          type: string
+
+    Media_Servicio:
+      columns:
+        id_media_servicio:
+          type: int
+          pk: true
+        url_media:
+          type: string
+        orden:
+          type: int
+        formato:
+          type: string
+        id_servicio:
+          type: int
+          fk:
+            references: Servicio.id_servicio
+            nullable: false
+
+    Contenido:
+      columns:
+        id_contenido:
+          type: int
+          pk: true
+        ruta:
+          type: string
+        titulo:
+          type: string
+        descripcion:
+          type: string
+
+    Media_Contenido:
+      columns:
+        id_media_contenido:
+          type: int
+          pk: true
+        url_media:
+          type: string
+        orden:
+          type: int
+        formato:
+          type: string
+        id_contenido:
+          type: int
+          fk:
+            references: Contenido.id_contenido
+            nullable: false
+
+    Cliente:
+      columns:
+        rut_cliente:
+          type: string
+          pk: true
+        nombre:
+          type: string
+        correo:
+          type: string
+        numero:
+          type: string
+        id_empresa:
+          type: int
+          fk:
+            references: Empresa.id_empresa
+            nullable: true
+
+    Empresa:
+      columns:
+        id_empresa:
+          type: int
+          pk: true
+        rut_empresa:
+          type: string
+        nombre_empresa:
+          type: string
+        direccion_empresa:
+          type: string
+
+    Venta:
+      columns:
+        id_venta:
+          type: int
+          pk: true
+        fecha:
+          type: datetime
+        monto:
+          type: decimal
+        descripcion:
+          type: string
+        rut_cliente:
+          type: string
+          fk:
+            references: Cliente.rut_cliente
+            nullable: false
+
+    Deuda:
+      columns:
+        id_deuda:
+          type: int
+          pk: true
+        monto_original:
+          type: decimal
+        fecha_creacion:
+          type: datetime
+        id_venta:
+          type: int
+          fk:
+            references: Venta.id_venta
+            nullable: false
+          unique: true
+
+    Nota_Credito:
+      columns:
+        id_nota_credito:
+          type: int
+          pk: true
+        monto:
+          type: decimal
+        fecha:
+          type: datetime
+        descripcion:
+          type: string
+        id_deuda:
+          type: int
+          fk:
+            references: Deuda.id_deuda
+            nullable: false
+
+    Pago:
+      columns:
+        id_pago:
+          type: int
+          pk: true
+        monto_pago:
+          type: decimal
+        fecha_pago:
+          type: datetime
+        id_deuda:
+          type: int
+          fk:
+            references: Deuda.id_deuda
+            nullable: false

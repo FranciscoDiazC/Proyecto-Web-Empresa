@@ -1,0 +1,65 @@
+authentication_model:                 # Nodo raíz del modelo de Autenticación y Sesión (modelo transversal)
+  version: "1.0"                      # Versión del modelo para control de cambios y evolución
+  scope: transversal                  # Indica que afecta a todo el sistema, no a un solo módulo
+  source: "Modelo de Seguridad del Sistema"  # Origen conceptual del modelo (trazabilidad documental)
+
+  description: >                      # Descripción humana para contexto del LLM
+    Define el mecanismo de autenticación, asignación de roles y gestión de sesión.
+    Este modelo es responsable de crear el contexto de seguridad que será consumido
+    por el RBAC, las reglas de negocio (guards) y la API.
+
+  # -----------------------------
+  # Autenticación
+  # -----------------------------
+  authentication:                     # Bloque que define cómo se autentican los usuarios
+    mechanism: token_based_with_server_session
+    credential_validation: server_side # Las credenciales SIEMPRE se validan en el servidor
+    role_assignment: server_side       # Los roles se asignan por el sistema, nunca por el cliente
+
+    login:                             # Definición explícita del proceso de login
+      validates_credentials: true      # El login verifica identidad (usuario/clave, etc.)
+      creates_session_id: true
+      assigns_roles: true              # El login es el punto donde se asignan roles
+      issues_token: true               # El login genera un token de autenticación
+
+    logout:                            # Definición explícita del proceso de logout
+      invalidates_session_id: true     # Logout invalida el session_id
+
+  # -----------------------------
+  # Token
+  # -----------------------------
+  token:                               # Modelo conceptual del token emitido
+    format: JWT                       # Define el formato (importante para implementación)
+
+    contains:                         # Claims mínimos que el token debe contener
+      - user_id                       # Identidad del usuario autenticado
+      - session_id                    # Sesión del usuario autenticado
+      - roles                         # Roles asignados (consumidos por RBAC)
+      - issued_at                     # Momento de emisión (auditoría / validación)
+      - expiration                    # Momento de expiración (gestión de sesión)
+
+    signing:                          # Información sobre firma del token
+      required: true                  # Firma requerida
+      issuer: system                  # El sistema es el emisor del token (no terceros)
+
+  # -----------------------------
+  # Gestión de Sesión
+  # -----------------------------
+  session:                            # Define cómo se mantiene la sesión en el tiempo
+    transport: http_cookie            # El token se transporta mediante cookie HTTP
+
+    cookie:                           # Propiedades de seguridad de la cookie
+      http_only: true                 # Evita acceso desde JavaScript (mitiga XSS)
+      secure: true                    # Solo se envía por HTTPS
+      same_site: strict               # Evita envío cross-site (mitiga CSRF)
+
+    expiration:                       # Política de expiración de sesión
+      duration_minutes: 30            # Tiempo de vida del token (parámetro configurable)
+      policy: fixed                   # fixed = no se renueva automáticamente | sliding = se renueva con actividad
+      applies_to:
+        - token
+        - session
+
+    invalidation_conditions:          # Condiciones bajo las cuales la sesión deja de ser válida
+      - logout                        # El usuario cierra sesión explícitamente
+      - expiration                    # El token expira por tiempo

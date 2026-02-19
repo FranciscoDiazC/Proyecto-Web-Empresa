@@ -1,0 +1,30 @@
+Entidades:
+  Usuario:
+    Estados:
+      - ACTIVO
+      - BLOQUEADO
+  Sesion:
+    Estados:
+      - ACTIVO
+      - CERRADO
+  Venta:
+    Estados:
+      - ACTIVO
+      - ANULADO
+  Deuda:
+    Estados:
+      - PENDIENTE
+      - PAGADO
+      - ANULADO
+  Pago:
+    Estados:
+      - REGISTRADO
+      - ANULADO
+  Cliente:
+    Estados:
+      - HABILITADO
+      - ANULADO
+  Empresa:
+    Estados:
+      - HABILITADO
+      - ANULADO

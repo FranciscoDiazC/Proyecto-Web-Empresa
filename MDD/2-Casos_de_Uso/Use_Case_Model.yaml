@@ -1,0 +1,564 @@
+system:
+  name: "Panel Administracion"
+  primary_actor: "Usuario"
+  secondary_actors: []
+
+use_cases:
+  CU-01:
+    id: CU-01
+    name: "Iniciar Sesión"
+    primary_actor: "Usuario"
+    secondary_actors: []
+    authorization:
+      required_roles: []
+    description: >
+      Permite a un Usuario autenticarse en el sistema ingresando sus credenciales
+      para acceder a las funcionalidades habilitadas según su rol. Todo intento
+      de autenticación, exitoso o fallido, queda registrado en la Auditoría.
+    includes: []
+    preconditions:
+      - "El Usuario no tiene una sesión activa."
+    postconditions:
+      - "La sesión del Usuario queda activa."
+      - "El Usuario accede a las funcionalidades habilitadas según su rol."
+      - "Se registra en auditoría el evento de inicio de sesión."
+    main_flow:
+      - step: user_access_login_screen
+      - step: system_request_credentials
+      - step: user_enter_credentials
+      - step: system_validate_credentials
+      - step: system_identify_user
+      - step: system_determine_roles
+      - step: system_assign_rbac_permissions
+      - step: system_start_session
+      - step: system_emit_auth_token
+      - step: system_audit_login
+      - step: system_redirect_to_role_home
+    extensions: {}
+    exceptions:
+      - EXC-AUTH-VAL-01
+      - EXC-STATE-CONFLICT-01
+    rules:
+      invariants:
+        - RN-IS-I01
+      effects: []
+      guards: []
+
+  CU-02:
+    id: CU-02
+    name: "Cerrar Sesión"
+    primary_actor: "Usuario"
+    secondary_actors: []
+    authorization:
+      required_roles: []
+    description: >
+      Permite a un Usuario finalizar su sesión activa en el sistema, invalidando
+      el acceso a las funcionalidades protegidas hasta que se realice un nuevo inicio de sesión.
+    includes: []
+    preconditions:
+      - "El Usuario tiene una sesión activa."
+    postconditions:
+      - "La sesión del Usuario queda cerrada."
+      - "El acceso a las funcionalidades protegidas queda bloqueado hasta un nuevo inicio de sesión."
+    main_flow:
+      - step: user_select_logout
+      - step: system_request_logout_confirmation
+      - step: user_confirm_logout
+      - step: system_invalidate_session
+      - step: system_audit_logout
+      - step: system_redirect_to_login
+    extensions: {}
+    exceptions: []
+    rules:
+      invariants:
+        - RN-CS-I01
+      effects: []
+      guards: []
+
+  CU-03:
+    id: CU-03
+    name: "Gestionar Ventas"
+    primary_actor: "Usuario"
+    secondary_actors: []
+    authorization:
+      required_roles:
+        - SALES_OPERATOR
+    description: >
+      Permite al Usuario visualizar, crear, anular ventas, agregar correcciones a la
+      descripción, corregir cliente y emitir notas de crédito. Todas las operaciones
+      excepto lectura quedan registradas en auditoría.
+    includes:
+      - "Leer Ventas"
+    preconditions:
+      - "El Usuario tiene una sesión activa."
+      - "El Usuario posee el rol SALES_OPERATOR."
+    postconditions:
+      - "Las ventas quedan creadas, actualizadas o anuladas según la acción ejecutada."
+      - "Las notas de crédito quedan creadas y asociadas a la venta correspondiente."
+      - "Las deudas asociadas se crean o actualizan automáticamente cuando corresponde."
+      - "Se registra auditoría de toda operación realizada, excepto de lectura."
+    main_flow:
+      - step: user_access_sales_module
+      - include: "Leer Ventas"
+      - step: user_select_action
+      - extension_point: seleccionar_accion_de_venta
+      - step: system_update_sales_information
+      - step: system_reflect_debt_changes
+    extensions:
+      "Crear Venta":
+        extension_point: seleccionar_accion_de_venta
+        flow:
+          - step: user_select_create_sale
+          - step: system_request_sale_data
+          - step: user_enter_sale_data
+          - step: system_validate_sale_data
+          - step: system_register_sale
+          - step: system_generate_debt_for_sale
+          - step: system_audit_create_sale
+          - step: system_return_to_sales_listing
+      "Anular Venta":
+        extension_point: seleccionar_accion_de_venta
+        flow:
+          - step: user_select_void_sale
+          - step: system_request_void_confirmation
+          - step: user_confirm_void
+          - step: system_validate_void_rules
+          - step: system_void_sale
+          - step: system_void_associated_debt
+          - step: system_audit_void_sale
+          - step: system_return_to_sales_listing
+      "Agregar Corrección de Descripción":
+        extension_point: seleccionar_accion_de_venta
+        flow:
+          - step: user_select_add_description_correction
+          - step: system_request_description_correction_data
+          - step: user_enter_correction_data
+          - step: system_validate_correction_data
+          - step: system_register_description_correction
+          - step: system_audit_description_correction
+          - step: system_return_to_sales_listing
+      "Corregir Cliente de Venta":
+        extension_point: seleccionar_accion_de_venta
+        flow:
+          - step: user_select_change_sale_client
+          - step: system_request_new_client_data
+          - step: user_enter_new_client_data
+          - step: system_validate_client_exists
+          - step: system_update_sale_client
+          - step: system_audit_client_change
+          - step: system_return_to_sales_listing
+      "Crear Nota de Crédito":
+        extension_point: seleccionar_accion_de_venta
+        flow:
+          - step: user_select_create_credit_note
+          - step: system_request_credit_note_data
+          - step: user_enter_credit_note_data
+          - step: system_validate_credit_note_amount
+          - step: system_register_credit_note
+          - step: system_update_associated_debt
+          - step: system_audit_credit_note
+          - step: system_return_to_sales_listing
+    exceptions:
+      - EXC-STATE-CONFLICT-02
+      - EXC-PERM-CONFLICT-01
+      - EXC-DATA-VAL-01
+      - EXC-RULE-CONFLICT-01
+      - EXC-ID-MISS-01
+      - EXC-RULE-VAL-01
+    rules:
+      invariants:
+        - RN-GV-I01
+        - RN-GV-I02
+      effects:
+        - RN-GV-E01
+        - RN-GV-E02
+      guards:
+        - RN-GV-G01
+        - RN-GV-G02
+        - RN-GV-G03
+        - RN-GV-G04
+        - RN-GV-G05
+        - RN-GV-G06
+
+  CU-04:
+    id: CU-04
+    name: "Gestionar Pagos"
+    primary_actor: "Usuario"
+    secondary_actors: []
+    authorization:
+      required_roles:
+        - PAYMENT_OPERATOR
+    description: >
+      Permite visualizar deudas y visualizar, registrar y anular pagos asociados a deudas
+      derivadas de ventas. Todas las operaciones, excepto lectura, mantienen trazabilidad mediante auditoría.
+    includes:
+      - "Leer Pagos"
+      - "Leer Deudas"
+    preconditions:
+      - "El Usuario tiene una sesión activa."
+      - "El Usuario posee el rol PAYMENT_OPERATOR."
+    postconditions:
+      - "Los pagos quedan registrados o anulados según la acción ejecutada."
+      - "Las deudas asociadas se actualizan automáticamente en su saldo y estado."
+      - "Se registra auditoria de toda operación realizada, excepto de lectura."
+    main_flow:
+      - step: user_access_payments_module
+      - step: system_get_registered_payments
+      - step: system_get_associated_debts
+      - step: user_select_action
+      - extension_point: seleccionar_accion_de_pago
+      - step: system_update_payments_and_debts_listing
+      - step: system_reflect_debt_balance_changes
+    extensions:
+      "Registrar Pago":
+        extension_point: seleccionar_accion_de_pago
+        flow:
+          - step: user_select_register_payment
+          - step: system_request_payment_data
+          - step: user_enter_payment_data
+          - step: system_validate_payment_data
+          - step: system_register_payment
+          - step: system_update_debt_balance_and_status
+          - step: system_audit_register_payment
+          - step: system_return_to_payments_listing
+      "Anular Pago":
+        extension_point: seleccionar_accion_de_pago
+        flow:
+          - step: user_select_void_payment
+          - step: system_request_void_confirmation
+          - step: user_confirm_void
+          - step: system_validate_payment_void_rules
+          - step: system_void_payment
+          - step: system_recalculate_and_update_debt_balance
+          - step: system_audit_void_payment
+          - step: system_return_to_payments_listing
+    exceptions:
+      - EXC-STATE-CONFLICT-03
+      - EXC-PERM-CONFLICT-02
+      - EXC-DATA-VAL-02
+      - EXC-RULE-VAL-02
+      - EXC-RULE-CONFLICT-02
+    rules:
+      invariants:
+        - RN-GP-I01
+        - RN-GP-I02
+      effects:
+        - RN-GP-E01
+        - RN-GP-E02
+      guards:
+        - RN-GP-G01
+        - RN-GP-G02
+        - RN-GP-G03
+        - RN-GP-G04
+        - RN-GP-G05
+
+  CU-05:
+    id: CU-05
+    name: "Gestionar Clientes"
+    primary_actor: "Usuario"
+    secondary_actors: []
+    authorization:
+      required_roles:
+        - CLIENTS_ADMIN
+    description: >
+      Permite visualizar, crear, editar, anular y habilitar clientes. El estado del cliente
+      determina su disponibilidad para ser asociado a nuevas ventas. Todas las operaciones excepto lectura
+      quedan registradas en la auditoría.
+    includes:
+      - "Leer Clientes"
+    preconditions:
+      - "El Usuario tiene una sesión activa."
+      - "El Usuario posee el rol CLIENTS_ADMIN."
+    postconditions:
+      - "Los clientes quedan creados, actualizados, anulados o habilitados según la acción realizada."
+      - "Toda operación, excepto las de lectura, queda registrada en la auditoría."
+    main_flow:
+      - step: user_access_clients_module
+      - include: "Leer Clientes"
+      - step: user_select_action
+      - extension_point: seleccionar_accion_de_cliente
+      - step: system_update_client_information_and_state
+    extensions:
+      "Crear Cliente":
+        extension_point: seleccionar_accion_de_cliente
+        flow:
+          - step: user_select_create_client
+          - step: system_request_client_data
+          - step: user_enter_client_data
+          - step: system_validate_client_data
+          - step: system_register_client_as_enabled
+          - step: system_audit_create_client
+          - step: system_return_to_clients_listing
+      "Editar Cliente":
+        extension_point: seleccionar_accion_de_cliente
+        flow:
+          - step: user_select_edit_client
+          - step: system_request_client_update_data
+          - step: user_enter_updated_client_data
+          - step: system_validate_updated_data
+          - step: system_update_client
+          - step: system_audit_edit_client
+          - step: system_return_to_clients_listing
+      "Anular Cliente":
+        extension_point: seleccionar_accion_de_cliente
+        flow:
+          - step: user_select_void_client
+          - step: system_request_void_confirmation
+          - step: user_confirm_void
+          - step: system_validate_client_void_rules
+          - step: system_change_client_status_to_void
+          - step: system_audit_void_client
+          - step: system_return_to_clients_listing
+      "Habilitar Cliente":
+        extension_point: seleccionar_accion_de_cliente
+        flow:
+          - step: user_select_enable_client
+          - step: system_validate_client_is_void
+          - step: system_change_client_status_to_enabled
+          - step: system_audit_enable_client
+          - step: system_return_to_clients_listing
+    exceptions:
+      - EXC-STATE-CONFLICT-04
+      - EXC-PERM-CONFLICT-03
+      - EXC-DATA-VAL-03
+      - EXC-DATA-VAL-04
+      - EXC-RULE-CONFLICT-03
+    rules:
+      invariants:
+        - RN-GC-I01
+      effects:
+        - RN-GC-E01
+        - RN-GC-E02
+      guards:
+        - RN-GC-G01
+        - RN-GC-G02
+        - RN-GC-G03
+        - RN-GC-G04
+        - RN-GC-G05
+        - RN-GC-G06
+        - RN-GC-G07
+        - RN-GC-G08
+
+  CU-06:
+    id: CU-06
+    name: "Gestionar Empresas"
+    primary_actor: "Usuario"
+    secondary_actors: []
+    authorization:
+      required_roles:
+        - COMPANIES_ADMIN
+    description: >
+      Permite visualizar, crear, editar, anular y habilitar empresas que representan entidades jurídicas
+      asociables a clientes y ventas. Todas las operaciones excepto lectura quedan registradas en la auditoría.
+    includes:
+      - "Leer Empresas"
+    preconditions:
+      - "El Usuario tiene una sesión activa."
+      - "El Usuario posee el rol COMPANIES_ADMIN."
+    postconditions:
+      - "Las empresas quedan creadas, actualizadas, anuladas o habilitadas según la acción realizada."
+      - "Toda operación, excepto las de lectura, queda registrada en la auditoría."
+    main_flow:
+      - step: user_access_companies_module
+      - include: "Leer Empresas"
+      - step: user_select_action
+      - extension_point: seleccionar_accion_de_empresa
+      - step: system_update_company_information_and_state
+    extensions:
+      "Crear Empresa":
+        extension_point: seleccionar_accion_de_empresa
+        flow:
+          - step: user_select_create_company
+          - step: system_request_company_data
+          - step: user_enter_company_data
+          - step: system_validate_company_data
+          - step: system_register_company_as_enabled
+          - step: system_audit_create_company
+          - step: system_return_to_companies_listing
+      "Editar Empresa":
+        extension_point: seleccionar_accion_de_empresa
+        flow:
+          - step: user_select_edit_company
+          - step: system_request_company_update_data
+          - step: user_enter_updated_company_data
+          - step: system_validate_updated_data
+          - step: system_update_company
+          - step: system_audit_edit_company
+          - step: system_return_to_companies_listing
+      "Anular Empresa":
+        extension_point: seleccionar_accion_de_empresa
+        flow:
+          - step: user_select_void_company
+          - step: system_request_void_confirmation
+          - step: user_confirm_void
+          - step: system_validate_company_void_rules
+          - step: system_change_company_status_to_void
+          - step: system_audit_void_company
+          - step: system_return_to_companies_listing
+      "Habilitar Empresa":
+        extension_point: seleccionar_accion_de_empresa
+        flow:
+          - step: user_select_enable_company
+          - step: system_validate_company_is_void
+          - step: system_change_company_status_to_enabled
+          - step: system_audit_enable_company
+          - step: system_return_to_companies_listing
+    exceptions:
+      - EXC-STATE-CONFLICT-05
+      - EXC-PERM-CONFLICT-04
+      - EXC-DATA-VAL-05
+      - EXC-DATA-VAL-06
+      - EXC-RULE-CONFLICT-04
+    rules:
+      invariants:
+        - RN-GE-I01
+      effects:
+        - RN-GE-E01
+        - RN-GE-E02
+      guards:
+        - RN-GE-G01
+        - RN-GE-G02
+        - RN-GE-G03
+        - RN-GE-G04
+        - RN-GE-G05
+        - RN-GE-G06
+
+  CU-07:
+    id: CU-07
+    name: "Gestionar Servicios"
+    primary_actor: "Usuario"
+    secondary_actors: []
+    authorization:
+      required_roles:
+        - CONTENT_ADMIN
+    description: >
+      Permite visualizar, crear, editar y eliminar Servicios ofrecidos por la empresa.
+      Todas las operaciones, excepto las de lectura, mantienen trazabilidad mediante auditoría.
+    includes:
+      - "Leer Servicios"
+    preconditions:
+      - "El Usuario tiene una sesión activa."
+      - "El Usuario posee el rol CONTENT_ADMIN."
+    postconditions:
+      - "Los servicios quedan creados, actualizados o eliminados según la acción realizada."
+      - "Toda operación, excepto las de lectura, queda registrada en la auditoría."
+    main_flow:
+      - step: user_access_services_module
+      - include: "Leer Servicios"
+      - step: user_select_action
+      - extension_point: seleccionar_accion_de_servicio
+      - step: system_update_services_information
+    extensions:
+      "Crear Servicio":
+        extension_point: seleccionar_accion_de_servicio
+        flow:
+          - step: user_select_create_service
+          - step: system_request_service_data
+          - step: user_enter_service_data
+          - step: system_validate_service_data
+          - step: system_register_service
+          - step: system_audit_create_service
+          - step: system_return_to_services_listing
+      "Editar Servicio":
+        extension_point: seleccionar_accion_de_servicio
+        flow:
+          - step: user_select_edit_service
+          - step: system_request_service_update_data
+          - step: user_enter_updated_service_data
+          - step: system_validate_updated_data
+          - step: system_update_service
+          - step: system_audit_edit_service
+          - step: system_return_to_services_listing
+      "Eliminar Servicio":
+        extension_point: seleccionar_accion_de_servicio
+        flow:
+          - step: user_select_delete_service
+          - step: system_request_delete_confirmation
+          - step: user_confirm_delete
+          - step: system_validate_service_deletable
+          - step: system_delete_service
+          - step: system_audit_delete_service
+          - step: system_return_to_services_listing
+    exceptions:
+      - EXC-ID-MISS-02
+      - EXC-PERM-CONFLICT-05
+      - EXC-DATA-VAL-07
+      - EXC-DATA-VAL-08
+    rules:
+      invariants:
+        - RN-GS-I01
+      effects: []
+      guards:
+        - RN-GS-G01
+        - RN-GS-G02
+        - RN-GS-G03
+
+  CU-08:
+    id: CU-08
+    name: "Gestionar Contenido"
+    primary_actor: "Usuario"
+    secondary_actors: []
+    authorization:
+      required_roles:
+        - CONTENT_ADMIN
+    description: >
+      Permite visualizar, crear, editar y eliminar contenido. Todas las operaciones,
+      excepto las de lectura, mantienen trazabilidad mediante auditoría.
+    includes:
+      - "Leer Contenidos"
+    preconditions:
+      - "El Usuario tiene una sesión activa."
+      - "El Usuario posee el rol CONTENT_ADMIN."
+    postconditions:
+      - "Los contenidos quedan creados, editados o eliminados según la acción ejecutada."
+      - "Toda operación, excepto las de lectura, queda registrada en la auditoría."
+    main_flow:
+      - step: user_access_content_module
+      - include: "Leer Contenidos"
+      - step: user_select_action
+      - extension_point: seleccionar_accion_de_contenido
+      - step: system_update_content_information
+    extensions:
+      "Crear Contenido":
+        extension_point: seleccionar_accion_de_contenido
+        flow:
+          - step: user_select_create_content
+          - step: system_request_content_data
+          - step: user_enter_content_data
+          - step: system_validate_content_data
+          - step: system_register_content
+          - step: system_audit_create_content
+          - step: system_return_to_content_listing
+      "Editar Contenido":
+        extension_point: seleccionar_accion_de_contenido
+        flow:
+          - step: user_select_edit_content
+          - step: system_request_content_update_data
+          - step: user_enter_updated_content_data
+          - step: system_validate_updated_data
+          - step: system_update_content
+          - step: system_audit_edit_content
+          - step: system_return_to_content_listing
+      "Eliminar Contenido":
+        extension_point: seleccionar_accion_de_contenido
+        flow:
+          - step: user_select_delete_content
+          - step: system_request_delete_confirmation
+          - step: user_confirm_delete
+          - step: system_validate_content_deletable
+          - step: system_delete_content
+          - step: system_audit_delete_content
+          - step: system_return_to_content_listing
+    exceptions:
+      - EXC-ID-MISS-03
+      - EXC-PERM-CONFLICT-06
+      - EXC-DATA-VAL-09
+      - EXC-DATA-VAL-10
+    rules:
+      invariants:
+        - RN-GCN-I01
+      effects: []
+      guards:
+        - RN-GCN-G01
+        - RN-GCN-G02
+        - RN-GCN-G03
